@@ -17,6 +17,11 @@ public class PlayerIdleState : State<PlayerController>
     public override void OnLogicUpdate()
     {
         base.OnLogicUpdate();
+        if (InputManager.Instance.Movement != Vector2.zero)
+        {
+            // Cambiar a un estado RunningState
+            mFsm.ChangeState(mController.PlayerRunningState);
+        }
     }
 
     public override void OnPhysicsUpdate()
