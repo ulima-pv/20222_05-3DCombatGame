@@ -44,6 +44,15 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FreeLookView"",
+                    ""type"": ""Value"",
+                    ""id"": ""5be87cd1-f254-481d-86b9-c40ae7c36fc0"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -167,6 +176,17 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                     ""action"": ""Saltar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef63cfd1-4b40-44b7-b908-de97c95b1288"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeLookView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -177,6 +197,7 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Moverse = m_Player.FindAction("Moverse", throwIfNotFound: true);
         m_Player_Saltar = m_Player.FindAction("Saltar", throwIfNotFound: true);
+        m_Player_FreeLookView = m_Player.FindAction("FreeLookView", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,12 +259,14 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Moverse;
     private readonly InputAction m_Player_Saltar;
+    private readonly InputAction m_Player_FreeLookView;
     public struct PlayerActions
     {
         private @InputSystemPlayer m_Wrapper;
         public PlayerActions(@InputSystemPlayer wrapper) { m_Wrapper = wrapper; }
         public InputAction @Moverse => m_Wrapper.m_Player_Moverse;
         public InputAction @Saltar => m_Wrapper.m_Player_Saltar;
+        public InputAction @FreeLookView => m_Wrapper.m_Player_FreeLookView;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -259,6 +282,9 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                 @Saltar.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSaltar;
                 @Saltar.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSaltar;
                 @Saltar.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSaltar;
+                @FreeLookView.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeLookView;
+                @FreeLookView.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeLookView;
+                @FreeLookView.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeLookView;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -269,6 +295,9 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                 @Saltar.started += instance.OnSaltar;
                 @Saltar.performed += instance.OnSaltar;
                 @Saltar.canceled += instance.OnSaltar;
+                @FreeLookView.started += instance.OnFreeLookView;
+                @FreeLookView.performed += instance.OnFreeLookView;
+                @FreeLookView.canceled += instance.OnFreeLookView;
             }
         }
     }
@@ -277,5 +306,6 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
     {
         void OnMoverse(InputAction.CallbackContext context);
         void OnSaltar(InputAction.CallbackContext context);
+        void OnFreeLookView(InputAction.CallbackContext context);
     }
 }

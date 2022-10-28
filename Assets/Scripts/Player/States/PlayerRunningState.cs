@@ -37,7 +37,14 @@ public class PlayerRunningState : State<PlayerController>
         else
         {
             mAnimator.SetFloat("Speed", 1f, mController.dampTime, Time.deltaTime);
+            // Rotation
+            mController.transform.rotation = Quaternion.Lerp(
+                mController.transform.rotation,
+                Quaternion.LookRotation(movementVector),
+                mController.rotationDampTime
+            );
         }
+
 
     }
 

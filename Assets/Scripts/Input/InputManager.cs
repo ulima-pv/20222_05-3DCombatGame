@@ -44,4 +44,7 @@ public class InputManager : MonoBehaviour, InputSystemPlayer.IPlayerActions
     {
         OnJumpHandler += handler;
     }
+
+    public void OnFreeLookView(InputAction.CallbackContext context)
+    {}
 }

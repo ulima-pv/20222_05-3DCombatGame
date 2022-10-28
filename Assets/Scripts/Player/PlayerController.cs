@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5f;
     public float jumpSpeed = 6f;
     public float dampTime = 0.1f;
+    public float rotationDampTime = 0.1f;
 
     private Rigidbody mRb;
     private Animator mAnimator;
