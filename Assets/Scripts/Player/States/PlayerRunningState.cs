@@ -21,8 +21,7 @@ public class PlayerRunningState : State<PlayerController>
     {
         base.OnLogicUpdate();
 
-        Vector3 movementVector = Vector3.right * InputManager.Instance.Movement.x +
-            Vector3.forward * InputManager.Instance.Movement.y;
+        Vector3 movementVector = CalculateDirection(InputManager.Instance.Movement);
 
         mCharacterController.Move(
             movementVector * Time.deltaTime * mController.speed
@@ -44,8 +43,6 @@ public class PlayerRunningState : State<PlayerController>
                 mController.rotationDampTime
             );
         }
-
-
     }
 
     public override void OnPhysicsUpdate()
@@ -63,5 +60,19 @@ public class PlayerRunningState : State<PlayerController>
     public override void OnStop()
     {
         base.OnStop();
+    }
+
+    private Vector3 CalculateDirection(Vector2 mov)
+    {
+        var dirForward = mController.MainCamera.transform.forward;
+        var dirRight = mController.MainCamera.transform.right;
+
+        dirForward.y = 0f;
+        dirRight.y = 0f;
+
+        dirForward.Normalize();
+        dirRight.Normalize();
+
+        return dirForward * mov.y + dirRight * mov.x;
     }
 }

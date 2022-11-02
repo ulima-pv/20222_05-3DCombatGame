@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float dampTime = 0.1f;
     public float rotationDampTime = 0.1f;
 
+    public Camera MainCamera;
+
     private Rigidbody mRb;
     private Animator mAnimator;
     private FiniteStateMachine<PlayerController> mFsm;
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        //MainCamera = Camera.main.transform;
         mFsm.Start(PlayerIdleState);
     }
 
