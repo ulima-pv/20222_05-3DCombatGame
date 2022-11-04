@@ -30,6 +30,7 @@ public class PlayerAttackingState : State<PlayerController>
         base.OnLogicUpdate();
         if (mController.OnAttackingAnimationEnd)
         {
+            mController.OnAttackingAnimationEnd = false;
             mFsm.ChangeState(mController.PlayerIdleState);
         }
     }

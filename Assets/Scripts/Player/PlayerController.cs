@@ -9,13 +9,14 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 6f;
     public float dampTime = 0.1f;
     public float rotationDampTime = 0.1f;
+    public GameObject hitBox;
 
     public Camera MainCamera;
 
     private Rigidbody mRb;
     private Animator mAnimator;
     private FiniteStateMachine<PlayerController> mFsm;
-    public bool OnAttackingAnimationEnd { get; private set; } = false;
+    public bool OnAttackingAnimationEnd { get; set; } = false;
 
     // States
     public State<PlayerController> PlayerIdleState;
@@ -50,8 +51,14 @@ public class PlayerController : MonoBehaviour
         mFsm.CurrentState.OnLogicUpdate();
     }
 
+    public void ActivateHitbox()
+    {
+        hitBox.SetActive(true);
+    }
+
     public void OnAttackAnimationEnd()
     {
         OnAttackingAnimationEnd = true;
+        hitBox.SetActive(false);
     }
 }
