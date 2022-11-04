@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,8 +54,16 @@ public class PlayerRunningState : State<PlayerController>
     public override void OnStart()
     {
         base.OnStart();
+
+        InputManager.Instance.AddOnAttackHandler(Attack1);
+
         mCharacterController = mController.GetComponent<CharacterController>();
         mAnimator = mController.GetComponent<Animator>();
+    }
+
+    private void Attack1(object sender, EventArgs e)
+    {
+        mFsm.ChangeState(mController.PlayerAttackingState); // Cambiar al estado de Ataque
     }
 
     public override void OnStop()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,17 @@ public class PlayerIdleState : State<PlayerController>
     public override void OnStart()
     {
         base.OnStart();
+        InputManager.Instance.AddOnAttackHandler(Attack1);
         mAnimator = mController.GetComponent<Animator>();
+
+        mAnimator.Play("Blend Tree");
+    }
+
+    private void Attack1(object sender, EventArgs e)
+    {
+        // Delegado que se ejecutara cuando se haga click izquierdo
+        // con el mouse
+        mFsm.ChangeState(mController.PlayerAttackingState); // Cambiar a estado de Ataque
     }
 
     public override void OnStop()

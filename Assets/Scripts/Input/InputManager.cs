@@ -10,7 +10,9 @@ public class InputManager : MonoBehaviour, InputSystemPlayer.IPlayerActions
     public Vector2 Movement { get; private set;}
 
     private InputSystemPlayer mInputPlayer;
+
     private event EventHandler OnJumpHandler;
+    private event EventHandler OnAttack1Handler;
 
     void Awake()
     {
@@ -45,6 +47,19 @@ public class InputManager : MonoBehaviour, InputSystemPlayer.IPlayerActions
         OnJumpHandler += handler;
     }
 
+    public void AddOnAttackHandler(EventHandler handler)
+    {
+        OnAttack1Handler += handler;
+    }
+
     public void OnFreeLookView(InputAction.CallbackContext context)
     {}
+
+    public void OnAttack1(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnAttack1Handler?.Invoke(this, EventArgs.Empty);
+        }
+    }
 }

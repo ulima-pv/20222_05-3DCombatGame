@@ -15,10 +15,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody mRb;
     private Animator mAnimator;
     private FiniteStateMachine<PlayerController> mFsm;
+    public bool OnAttackingAnimationEnd { get; private set; } = false;
 
     // States
     public State<PlayerController> PlayerIdleState;
     public State<PlayerController> PlayerRunningState;
+    public State<PlayerController> PlayerAttackingState;
 
     private void Awake()
     {
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
         mFsm = new FiniteStateMachine<PlayerController>();
         PlayerIdleState = new PlayerIdleState(this, mFsm);
         PlayerRunningState = new PlayerRunningState(this, mFsm);
+        PlayerAttackingState = new PlayerAttackingState(this, mFsm);
     }
 
     private void Start()
@@ -47,4 +50,8 @@ public class PlayerController : MonoBehaviour
         mFsm.CurrentState.OnLogicUpdate();
     }
 
+    public void OnAttackAnimationEnd()
+    {
+        OnAttackingAnimationEnd = true;
+    }
 }
