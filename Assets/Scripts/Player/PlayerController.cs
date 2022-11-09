@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     public void ActivateHitbox()
     {
         hitBox.SetActive(true);
-    }
+    }   
 
     public void OnAttackAnimationEnd()
     {
