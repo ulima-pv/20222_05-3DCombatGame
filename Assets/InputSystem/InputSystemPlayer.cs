@@ -62,6 +62,15 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Focus"",
+                    ""type"": ""Button"",
+                    ""id"": ""67ebcc8d-76a8-4a85-bba5-665642b20ddd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -273,6 +282,28 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                     ""action"": ""Attack1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69e18b63-2a09-4bca-82fb-b1a9e4cdc260"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Focus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""782f8ebe-a48a-4210-9bd5-ebed2288ce44"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Focus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -313,6 +344,7 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
         m_Player_Saltar = m_Player.FindAction("Saltar", throwIfNotFound: true);
         m_Player_FreeLookView = m_Player.FindAction("FreeLookView", throwIfNotFound: true);
         m_Player_Attack1 = m_Player.FindAction("Attack1", throwIfNotFound: true);
+        m_Player_Focus = m_Player.FindAction("Focus", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -376,6 +408,7 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Saltar;
     private readonly InputAction m_Player_FreeLookView;
     private readonly InputAction m_Player_Attack1;
+    private readonly InputAction m_Player_Focus;
     public struct PlayerActions
     {
         private @InputSystemPlayer m_Wrapper;
@@ -384,6 +417,7 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
         public InputAction @Saltar => m_Wrapper.m_Player_Saltar;
         public InputAction @FreeLookView => m_Wrapper.m_Player_FreeLookView;
         public InputAction @Attack1 => m_Wrapper.m_Player_Attack1;
+        public InputAction @Focus => m_Wrapper.m_Player_Focus;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,6 +439,9 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                 @Attack1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack1;
                 @Attack1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack1;
                 @Attack1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack1;
+                @Focus.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFocus;
+                @Focus.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFocus;
+                @Focus.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFocus;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -421,6 +458,9 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
                 @Attack1.started += instance.OnAttack1;
                 @Attack1.performed += instance.OnAttack1;
                 @Attack1.canceled += instance.OnAttack1;
+                @Focus.started += instance.OnFocus;
+                @Focus.performed += instance.OnFocus;
+                @Focus.canceled += instance.OnFocus;
             }
         }
     }
@@ -449,5 +489,6 @@ public partial class @InputSystemPlayer : IInputActionCollection2, IDisposable
         void OnSaltar(InputAction.CallbackContext context);
         void OnFreeLookView(InputAction.CallbackContext context);
         void OnAttack1(InputAction.CallbackContext context);
+        void OnFocus(InputAction.CallbackContext context);
     }
 }

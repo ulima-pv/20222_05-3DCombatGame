@@ -24,14 +24,14 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        var dir = target.position - transform.position;
+        /*var dir = target.position - transform.position;
         dir.y = 0f;
         dir.Normalize();
 
         mCharacterController.Move(
             (Vector3.right * dir.x + Vector3.forward * dir.z)
             * enemyData.speed * Time.deltaTime
-        ); ;
+        ); ;*/
     }
 
     public void Hurt()

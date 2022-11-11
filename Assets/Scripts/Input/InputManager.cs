@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour, InputSystemPlayer.IPlayerActions
 
     private event EventHandler OnJumpHandler;
     private event EventHandler OnAttack1Handler;
+    private event EventHandler OnFocusHandler;
 
     void Awake()
     {
@@ -52,6 +53,11 @@ public class InputManager : MonoBehaviour, InputSystemPlayer.IPlayerActions
         OnAttack1Handler += handler;
     }
 
+    public void AddOnFocusHandler(EventHandler handler)
+    {
+        OnFocusHandler += handler;
+    }
+
     public void OnFreeLookView(InputAction.CallbackContext context)
     {}
 
@@ -60,6 +66,14 @@ public class InputManager : MonoBehaviour, InputSystemPlayer.IPlayerActions
         if (context.performed)
         {
             OnAttack1Handler?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public void OnFocus(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnFocusHandler?.Invoke(this, EventArgs.Empty);
         }
     }
 }
