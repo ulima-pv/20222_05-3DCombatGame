@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -9,10 +10,14 @@ public class EnemyController : MonoBehaviour
     public Transform target;
 
     private CharacterController mCharacterController;
+    private NavMeshAgent mNavMeshAgent;
 
     private void Start()
     {
         mCharacterController = GetComponent<CharacterController>();
+        mNavMeshAgent = GetComponent<NavMeshAgent>();
+        mNavMeshAgent.velocity = new Vector3(enemyData.speed, 0f, enemyData.speed);
+        mNavMeshAgent.destination = target.position;
 
         Instantiate(
             enemyData.prefab,
@@ -24,14 +29,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        /*var dir = target.position - transform.position;
-        dir.y = 0f;
-        dir.Normalize();
-
-        mCharacterController.Move(
-            (Vector3.right * dir.x + Vector3.forward * dir.z)
-            * enemyData.speed * Time.deltaTime
-        ); ;*/
+        mNavMeshAgent.destination = target.position;
     }
 
     public void Hurt()

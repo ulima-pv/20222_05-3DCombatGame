@@ -8,6 +8,8 @@ public class SwordCollision : MonoBehaviour
     {
         if (other.transform.CompareTag("Enemy"))
         {
+            if (other.GetComponent<EnemyController>() == null) return;
+            
             other.GetComponent<EnemyController>().Hurt();
         }
     }
